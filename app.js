@@ -3,14 +3,7 @@ const app = express()
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/todo-list')
-const schema = mongoose.Schema
-const todoSchema = new schema ({
-  name: {
-    type: String,
-    required: true
-  }
-})
-module.exports = mongoose.model('Todo',todoSchema)
+
 
 
 // 取得資料庫連線狀態
