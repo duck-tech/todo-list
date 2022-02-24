@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
+// setting template engine
+const exphbs = require('express-handlebars')
+app.engine('handlebars',exphbs({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars') // 啟用樣版引擎
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/todo-list')
-
-
 
 // 取得資料庫連線狀態
 const db = mongoose.connection
@@ -19,7 +21,7 @@ db.once('open', () => {
 
 
 app.get('/',(req,res) => {
-  res.send('success')
+  res.render('index')
 })
 
 app.listen(3000, () => {
