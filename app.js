@@ -44,6 +44,14 @@ app.post('/todos', (req,res) => {
           .catch(error => console.log(error))
 })
 
+app.get('/todos/:id', (req,res) => {
+  const id = req.params.id
+  return Todo.findById(id) // 查找資料
+            .lean() // 資料轉換成單純的 JS 物件
+            .then((todo) => res.render('detail',{todo}) )  // 將資料傳給detail樣板
+            .catch(error => console.error(error)) 
+})
+
 app.listen(3000, () => {
   console.log(`Express is running on http://localhost:3000`)
 })
