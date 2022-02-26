@@ -23,7 +23,10 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
 })
+
 app.use(bodyParser.urlencoded({extended: true})) // 用 app.use 指定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(express.static('public'))
+
 
 app.get('/',(req,res) => {
   Todo.find() // 從資料庫找資料：取出Todo model 裡的所有資料
@@ -68,7 +71,15 @@ app.post('/todos/:id/edit' , (req, res) => {
               return todo.save()
             })
             .then(() => res.redirect(`/todos/${id}`))
-            .catch(error => console.error)
+            .catch(error => console.log(error))
+})
+
+app.post('/todos/:id/delete' , (req, res) => {
+  const id = req.params.id
+  return Todo.findById(id)
+            .then(todo => todo.remove())
+            .then(() => res.redirect('/'))
+            .catch(error => console.log(error))
 })
 
 app.listen(3000, () => {
