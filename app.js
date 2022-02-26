@@ -23,8 +23,7 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
 })
-
-app.use(bodyParser.urlencoded({extended: true})) // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(bodyParser.urlencoded({extended: true})) // 用 app.use 指定每一筆請求都需要透過 body-parser 進行前置處理
 
 app.get('/',(req,res) => {
   Todo.find() // 從資料庫找資料：取出Todo model 裡的所有資料
@@ -38,7 +37,7 @@ app.get('/todos/new', (req,res) => {
 })
 
 app.post('/todos', (req,res) => {
-  const name = req.body.name // 從 req.body 拿出表單裡的name資料
+  const name = req.body.name // 從 req.body 拿出表單裡的 name 資料
   return Todo.create({name}) // 存入資料庫
           .then(() => res.redirect('/')) // 新增完成後導回首頁
           .catch(error => console.log(error))
@@ -48,8 +47,16 @@ app.get('/todos/:id', (req,res) => {
   const id = req.params.id
   return Todo.findById(id) // 查找資料
             .lean() // 資料轉換成單純的 JS 物件
-            .then((todo) => res.render('detail',{todo}) )  // 將資料傳給detail樣板
+            .then((todo) => res.render('detail',{todo}))  // 將資料傳給detail樣板
             .catch(error => console.error(error)) 
+})
+
+app.get('/todos/:id' , (req, res) => {
+  const id = req.params.id 
+  return Todo.findById(id)
+            .lean()
+            .then((todo))
+            .catch(error => console.error)
 })
 
 app.listen(3000, () => {
