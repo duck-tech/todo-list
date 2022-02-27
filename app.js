@@ -10,6 +10,10 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/todo-list')
 // body-parser
 const bodyParser = require('body-parser')
+// mothod-override
+const methodOverride = require('method-override')
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 
 
@@ -63,7 +67,7 @@ app.get('/todos/:id/edit' ,(req,res) => {
             .catch(error => console.log(error))
 })
 
-app.post('/todos/:id/edit' , (req, res) => {
+app.put('/todos/:id' , (req, res) => {
   const id = req.params.id 
   const {name,isDone} = req.body
   return Todo.findById(id)
@@ -76,7 +80,7 @@ app.post('/todos/:id/edit' , (req, res) => {
             .catch(error => console.log(error))
 })
 
-app.post('/todos/:id/delete' , (req, res) => {
+app.delete('/todos/:id' , (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
             .then(todo => todo.remove())
