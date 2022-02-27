@@ -2,34 +2,19 @@ const express = require('express')
 const app = express()
 // setting template engine
 const exphbs = require('express-handlebars')
-app.engine('handlebars',exphbs({defaultLayout: 'main'}))
-app.set('view engine', 'handlebars') // 啟用樣版引擎
-
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/todo-list')
 // body-parser
 const bodyParser = require('body-parser')
 // mothod-override
 const methodOverride = require('method-override')
-// 設定每一筆請求都會透過 methodOverride 進行前置處理
-app.use(methodOverride('_method'))
 // 引用路由器
 const routes = require('./routes')
+require('./config/mongoose')
 
+app.engine('handlebars',exphbs({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars') // 啟用樣版引擎
 
-
-
-// 取得資料庫連線狀態
-const db = mongoose.connection
-// 連線異常
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-// 連線成功
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
-
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({extended: true})) // 用 app.use 指定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(routes)
 app.use(express.static('public'))
