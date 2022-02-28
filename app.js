@@ -21,6 +21,6 @@ app.use(routes)
 app.use(express.static('public'))
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`Express is running on http://localhost:${PORT}`)
 })
