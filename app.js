@@ -9,7 +9,8 @@ const methodOverride = require('method-override')
 // 引用路由器
 const routes = require('./routes')
 require('./config/mongoose')
-
+// 如果在 Heroku 環境則使用 process.env.PORT
+const PORT = process.env.PORT || 3000
 app.engine('handlebars',exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars') // 啟用樣版引擎
 
@@ -21,5 +22,5 @@ app.use(express.static('public'))
 
 
 app.listen(3000, () => {
-  console.log(`Express is running on http://localhost:3000`)
+  console.log(`Express is running on http://localhost:${PORT}`)
 })
