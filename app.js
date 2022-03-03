@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const app = express()
 // setting template engine
 const exphbs = require('express-handlebars')
@@ -19,6 +20,11 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({extended: true})) // 用 app.use 指定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(routes)
 app.use(express.static('public'))
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 
 app.listen(PORT, () => {
