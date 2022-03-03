@@ -1,5 +1,4 @@
 const express = require('express')
-const session = require('express-session')
 const app = express()
 // setting template engine
 const exphbs = require('express-handlebars')
@@ -10,6 +9,12 @@ const methodOverride = require('method-override')
 // 引用路由器
 const routes = require('./routes')
 require('./config/mongoose')
+
+// 使用者登入
+const session = require('express-session')
+const usePassport = require('./config/passport')
+usePassport(app)
+
 // 如果在 Heroku 環境則使用 process.env.PORT
 const PORT = process.env.PORT || 3000
 app.engine('handlebars',exphbs({defaultLayout: 'main'}))
