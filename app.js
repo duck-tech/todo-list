@@ -13,7 +13,6 @@ require('./config/mongoose')
 // 使用者登入
 const session = require('express-session')
 const usePassport = require('./config/passport')
-usePassport(app)
 
 // 如果在 Heroku 環境則使用 process.env.PORT
 const PORT = process.env.PORT || 3000
@@ -23,6 +22,7 @@ app.set('view engine', 'handlebars') // 啟用樣版引擎
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({extended: true})) // 用 app.use 指定每一筆請求都需要透過 body-parser 進行前置處理
+usePassport(app)
 app.use(routes)
 app.use(express.static('public'))
 app.use(session({
