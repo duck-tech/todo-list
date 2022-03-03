@@ -33,8 +33,6 @@ usePassport(app)
 
 // 這個middleware會做用於所有路由
 app.use((req,res,next) => {
-  console.log(req.user)
-  console.log(req.isAuthenticated())
   //res.locals：所有樣板都可以使用的變數
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
