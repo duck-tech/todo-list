@@ -6,6 +6,11 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 // mothod-override
 const methodOverride = require('method-override')
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 // 引用路由器
 const routes = require('./routes')
 require('./config/mongoose')
@@ -15,12 +20,16 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const usePassport = require('./config/passport')
 
+console.log(process.env)
 
 
+
+console.log('-----------')
+console.log(process.env)
 // 如果在 Heroku 環境則使用 process.env.PORT
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
