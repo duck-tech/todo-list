@@ -38,7 +38,7 @@ module.exports = app => {
             if (user) return done(null, user)
             const randomPassword = Math.random().toString(36).slice(-8)
             bcrypt
-              .getSalt(10)
+              .genSalt(10)
               .then(salt => bcrypt.hash(randomPassword,salt))
               .then(hash => User.create({
                 name,
