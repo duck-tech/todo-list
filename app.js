@@ -19,13 +19,6 @@ require('./config/mongoose')
 const flash = require('connect-flash')
 const session = require('express-session')
 const usePassport = require('./config/passport')
-
-console.log(process.env)
-
-
-
-console.log('-----------')
-console.log(process.env)
 // 如果在 Heroku 環境則使用 process.env.PORT
 const PORT = process.env.PORT
 app.use(session({
